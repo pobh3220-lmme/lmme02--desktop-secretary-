@@ -48,7 +48,9 @@
       "Bash(sudo apt-get update -qq)",
       "Bash(sudo apt-get install -y -qq wine wine32)",
       "Bash(zip -r \"../桌面小秘书-v1.0.1-win-portable.zip\" win-unpacked/)",
-      "Bash(tar -czf \"../桌面小秘书-v1.0.1-win-portable.tar.gz\" win-unpacked/)"
+      "Bash(tar -czf \"../桌面小秘书-v1.0.1-win-portable.tar.gz\" win-unpacked/)",
+      "Bash(rm -f \"desktop-secretary/桌面小秘书-v1.0.1-win-portable.tar.gz\")",
+      "Bash(git commit -m 'fix: simplify release workflow, use tag push trigger *)"
     ]
   },
   "enabledMcpjsonServers": [

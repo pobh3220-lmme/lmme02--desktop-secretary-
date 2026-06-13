@@ -1,7 +1,13 @@
 name: Build & Release
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-windows:
@@ -25,15 +31,11 @@ jobs:
         working-directory: desktop-secretary
         run: npx electron-builder --win --x64
 
-      - name: List build output
-        run: |
-          dir desktop-secretary\release\*.exe
-          dir desktop-secretary\release\*.AppImage 2>nul || echo no appimage
+      - name: List output
+        shell: pwsh
+        run: Get-ChildItem desktop-secretary/release/*.exe
 
-      - uses: ncipollo/release-action@v1
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          artifacts: "desktop-secretary/release/*.exe,desktop-secretary/release/*.AppImage"
-          tag: v1.0.2
-          name: "桌面小秘书 v1.0.2"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          draft: false
+          files: desktop-secretary/release/*.exe
