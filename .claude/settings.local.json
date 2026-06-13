@@ -34,7 +34,17 @@
       "Bash(npx --yes vercel deploy --prod --yes --token)",
       "Bash(vercel deploy *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'v1.0.0: 桌面小秘书 - 智能待办事项管理 + 下载页 *)"
+      "Bash(git commit -m 'v1.0.0: 桌面小秘书 - 智能待办事项管理 + 下载页 *)",
+      "Bash(git push *)",
+      "Bash(gh auth *)",
+      "Read(//home/lmme/.ssh/**)",
+      "Bash(ssh-keygen *)",
+      "Bash(ssh -o StrictHostKeyChecking=no -T git@github.com)",
+      "Bash(ssh -o StrictHostKeyChecking=no -p 443 -T git@ssh.github.com)",
+      "Bash(git tag *)",
+      "Bash(cat)",
+      "WebFetch(domain:github.com)",
+      "Bash(git commit -m 'fix: update release workflow to v2 with explicit tag_name *)"
     ]
   },
   "enabledMcpjsonServers": [
