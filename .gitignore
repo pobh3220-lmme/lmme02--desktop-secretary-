@@ -7,3 +7,4 @@ release/
 Thumbs.db
 .tsbuildinfo
 *.bak
+/desktop-secretary/桌面小秘书*.tar.gz

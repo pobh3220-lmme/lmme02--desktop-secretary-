@@ -44,7 +44,11 @@
       "Bash(git tag *)",
       "Bash(cat)",
       "WebFetch(domain:github.com)",
-      "Bash(git commit -m 'fix: update release workflow to v2 with explicit tag_name *)"
+      "Bash(git commit -m 'fix: update release workflow to v2 with explicit tag_name *)",
+      "Bash(sudo apt-get update -qq)",
+      "Bash(sudo apt-get install -y -qq wine wine32)",
+      "Bash(zip -r \"../桌面小秘书-v1.0.1-win-portable.zip\" win-unpacked/)",
+      "Bash(tar -czf \"../桌面小秘书-v1.0.1-win-portable.tar.gz\" win-unpacked/)"
     ]
   },
   "enabledMcpjsonServers": [

@@ -1,9 +1,6 @@
 name: Build & Release
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -28,10 +25,15 @@ jobs:
         working-directory: desktop-secretary
         run: npx electron-builder --win --x64
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: List build output
+        run: |
+          dir desktop-secretary\release\*.exe
+          dir desktop-secretary\release\*.AppImage 2>nul || echo no appimage
+
+      - uses: ncipollo/release-action@v1
         with:
-          name: windows-installer
-          path: |
-            desktop-secretary/release/*.exe
-          retention-days: 30
+          artifacts: "desktop-secretary/release/*.exe,desktop-secretary/release/*.AppImage"
+          tag: v1.0.2
+          name: "桌面小秘书 v1.0.2"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
