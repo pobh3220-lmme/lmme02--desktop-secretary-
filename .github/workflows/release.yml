@@ -1,0 +1,41 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: desktop-secretary
+        run: npm ci
+
+      - name: Build Electron app
+        working-directory: desktop-secretary
+        run: npm run build
+
+      - name: Package Windows installer
+        working-directory: desktop-secretary
+        run: npx electron-builder --win --x64
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            desktop-secretary/release/桌面小秘书-*.exe
+            desktop-secretary/release/desktop-secretary*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

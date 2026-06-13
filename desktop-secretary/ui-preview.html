@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桌面小秘书 - UI 预览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh;
+      background: #E5E5EA;
+    }
+
+    .panel {
+      width: 640px;
+      height: 500px;
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    }
+
+    /* ====== 左侧边栏 ====== */
+    .sidebar {
+      width: 160px; flex-shrink: 0;
+      background: #F2F2F7;
+      display: flex; flex-direction: column;
+      padding: 16px 12px;
+      border-right: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .sidebar-header {
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 6px;
+    }
+    .sidebar-header .emoji { font-size: 18px; }
+    .sidebar-header .name { font-size: 13px; font-weight: 700; color: #1C1C1E; }
+    .sidebar-count { font-size: 11px; color: #8E8E93; margin-bottom: 16px; }
+
+    .sidebar-section {
+      font-size: 10px; font-weight: 600; color: #8E8E93;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 6px; margin-top: 12px;
+    }
+
+    .sidebar-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 8px; border-radius: 6px;
+      cursor: pointer; font-size: 12px; color: #3A3A3C;
+      margin-bottom: 1px;
+      transition: background 0.15s;
+    }
+    .sidebar-item:hover { background: rgba(0,0,0,0.04); }
+    .sidebar-item.active {
+      background: rgba(0,122,255,0.08);
+      color: #007AFF; font-weight: 600;
+    }
+    .sidebar-item .badge {
+      margin-left: auto;
+      font-size: 10px; color: #8E8E93;
+      background: rgba(0,0,0,0.06); border-radius: 8px;
+      padding: 1px 7px; min-width: 18px; text-align: center;
+    }
+
+    .sidebar-tags {
+      display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px;
+    }
+    .sidebar-tag {
+      padding: 3px 8px; border-radius: 4px;
+      font-size: 11px; cursor: pointer;
+      background: rgba(0,0,0,0.04); color: #3A3A3C;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar-tag:hover { background: rgba(0,0,0,0.08); }
+    .sidebar-tag.active {
+      background: rgba(0,122,255,0.08);
+      color: #007AFF; font-weight: 600;
+      border-color: rgba(0,122,255,0.2);
+    }
+    .sidebar-tag .dot {
+      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      margin-right: 3px; vertical-align: middle; margin-top: -1px;
+    }
+
+    .sidebar-bottom { margin-top: auto; }
+    .sidebar-close {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 14px; color: #8E8E93;
+      background: rgba(0,0,0,0.04);
+      border: none;
+      transition: all 0.15s;
+    }
+    .sidebar-close:hover { background: rgba(0,0,0,0.08); color: #3A3A3C; }
+
+    /* ====== 右侧内容区 ====== */
+    .main-area {
+      flex: 1; display: flex; flex-direction: column;
+      background: #FAFAFA;
+    }
+
+    /* 顶部输入框 */
+    .input-area {
+      padding: 10px 12px 6px;
+      flex-shrink: 0;
+    }
+    .input-area input {
+      width: 100%; padding: 7px 10px;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 8px; font-size: 12px;
+      outline: none; background: white;
+      transition: border-color 0.15s;
+    }
+    .input-area input:focus { border-color: rgba(0,122,255,0.4); }
+    .input-area input::placeholder { color: #C7C7CC; }
+
+    /* 中部卡片列表 */
+    .card-list {
+      flex: 1; overflow-y: auto;
+      padding: 4px 12px 8px;
+    }
+
+    .card {
+      background: white; border-radius: 10px;
+      padding: 10px 12px; margin-bottom: 6px;
+      border: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .card-checkbox {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border-radius: 50%;
+      border: 2px solid #D1D1D6;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-checkbox.checked {
+      background: #007AFF; border-color: #007AFF;
+      color: white; font-size: 10px;
+    }
+
+    .card-title {
+      flex: 1; font-size: 12px; font-weight: 500;
+      color: #1C1C1E; line-height: 1.4;
+    }
+    .card-dots {
+      display: flex; gap: 3px; flex-shrink: 0;
+    }
+    .card-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+
+    .card-empty {
+      text-align: center; color: #C7C7CC; font-size: 12px;
+      padding-top: 40px;
+    }
+
+    /* 底部进度条 */
+    .footer-bar {
+      padding: 8px 12px 10px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+    .footer-label {
+      display: flex; justify-content: space-between;
+      font-size: 10px; color: #8E8E93;
+      margin-bottom: 4px;
+    }
+    .progress-track {
+      height: 4px; background: rgba(0,0,0,0.06);
+      border-radius: 2px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 60%;
+      background: #007AFF; border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <!-- ===== 左侧边栏 ===== -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <span class="emoji">🐾</span>
+        <span class="name">桌面小秘书</span>
+      </div>
+      <div class="sidebar-count">3 个待办</div>
+
+      <div class="sidebar-section">状态</div>
+      <div class="sidebar-item active">全部 <span class="badge">5</span></div>
+      <div class="sidebar-item">待处理 <span class="badge">2</span></div>
+      <div class="sidebar-item">进行中 <span class="badge">1</span></div>
+      <div class="sidebar-item">已完成 <span class="badge">2</span></div>
+
+      <div class="sidebar-section">分类</div>
+      <div class="sidebar-tags">
+        <span class="sidebar-tag active"><span class="dot" style="background:#007AFF;"></span>工作</span>
+        <span class="sidebar-tag"><span class="dot" style="background:#34C759;"></span>设计</span>
+        <span class="sidebar-tag"><span class="dot" style="background:#FF9500;"></span>学习</span>
+        <span class="sidebar-tag"><span class="dot" style="background:#AF52DE;"></span>生活</span>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="sidebar-close">✕</button>
+      </div>
+    </div>
+
+    <!-- ===== 右侧内容区 ===== -->
+    <div class="main-area">
+      <!-- 顶部：常驻输入框 -->
+      <div class="input-area">
+        <input type="text" placeholder="输入待办，回车创建...">
+      </div>
+
+      <!-- 中部：卡片列表 -->
+      <div class="card-list">
+        <div class="card">
+          <div class="card-checkbox"></div>
+          <div class="card-title">提交项目方案</div>
+          <div class="card-dots">
+            <span class="card-dot" style="background:#E57373;" title="重要且紧急"></span>
+            <span class="card-dot" style="background:#007AFF;" title="工作"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-checkbox checked">✓</div>
+          <div class="card-title" style="color:#8E8E93;text-decoration:line-through;">整理设计素材</div>
+          <div class="card-dots">
+            <span class="card-dot" style="background:#BDBDBD;" title="不重要不紧急"></span>
+            <span class="card-dot" style="background:#34C759;" title="设计"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-checkbox"></div>
+          <div class="card-title">学习 React Hooks</div>
+          <div class="card-dots">
+            <span class="card-dot" style="background:#FFB74D;" title="重要不紧急"></span>
+            <span class="card-dot" style="background:#FF9500;" title="学习"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-checkbox"></div>
+          <div class="card-title">准备下周会议</div>
+          <div class="card-dots">
+            <span class="card-dot" style="background:#64B5F6;" title="紧急不重要"></span>
+            <span class="card-dot" style="background:#007AFF;" title="工作"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部：进度条 -->
+      <div class="footer-bar">
+        <div class="footer-label">
+          <span>完成进度</span>
+          <span>3/5 · 60%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

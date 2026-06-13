@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(openspec instructions *)",
+      "Bash(openspec status *)",
+      "Bash(npm --version)",
+      "Bash(npm create *)",
+      "Bash(npm info *)",
+      "Bash(npm install *)",
+      "Bash(npx jest *)",
+      "Bash(npm cache *)",
+      "Bash(npx eslint *)",
+      "Bash(npx tsc *)",
+      "Bash(npm test *)",
+      "Bash(npx electron-vite *)",
+      "Bash(npm run *)",
+      "Bash(wslpath -w \"/home/lmme/lmme02-ai coding/desktop-secretary\")",
+      "Read(//etc/**)",
+      "Bash(powershell.exe -Command \"node --version\")",
+      "Bash(powershell.exe -Command \"npm --version\")",
+      "Bash(powershell.exe *)",
+      "Bash(xdg-open *)",
+      "Bash(dpkg -l)",
+      "Bash(npx electron-builder *)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(npx --yes vercel --version)",
+      "Bash(vercel --version)",
+      "Bash(vercel link *)",
+      "Bash(vercel whoami *)",
+      "Bash(vercel login *)",
+      "Bash(npx --yes vercel deploy --prod --yes --token)",
+      "Bash(vercel deploy *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'v1.0.0: 桌面小秘书 - 智能待办事项管理 + 下载页 *)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}
